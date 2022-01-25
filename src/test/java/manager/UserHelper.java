@@ -1,5 +1,6 @@
 package manager;
 
+import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,10 +20,20 @@ public class UserHelper extends HelperBase{
         click(By.cssSelector("#login-submit"));
     }
 
-    public void fillLoginForm() {
-        type(By.cssSelector("#user"), "aleksivan060@gmail.com");
+
+
+    public void fillLoginForm(String email, String password) throws InterruptedException {
+        type(By.cssSelector("#user"), email);
         click(By.cssSelector("#login"));
-        type(By.cssSelector("#password"), "20111978");
+        type(By.name("password"), password);
+    }
+
+    public void fillLoginForm(User user) throws InterruptedException {
+        type(By.cssSelector("#user"), user.getEmail());
+        Thread.sleep(5000);
+        click(By.cssSelector("#login"));
+        type(By.name("password"), user.getPassword());
+
     }
 
     public void initLogin() {
@@ -37,5 +48,16 @@ public class UserHelper extends HelperBase{
     public boolean isLogged(){
         return wd.findElements(By.cssSelector("[data-test-id='header-member-menu-button']")).size()>0;
     }
-}
+
+    public void login(String email, String password) throws InterruptedException {
+        click(By.cssSelector("[href='/login']"));
+        type(By.cssSelector("#user"), email);
+        Thread.sleep(5000);
+        click(By.cssSelector("#login"));
+        type(By.name("password"),password);
+        click(By.id("login-submit"));
+        Thread.sleep(20000);
+    }
+    }
+
 

@@ -13,19 +13,20 @@ public class ApplicationManager {
     BoardHelper board;
     UserHelper user;
 
-    public ApplicationManager(WebDriver wd) {
-        this.wd = wd;
-    }
 
-    public void init() {
+
+    public void init() throws InterruptedException {
         ChromeOptions chromeOptions = new ChromeOptions();
         WebDriverManager.chromedriver().setup();
         wd = new ChromeDriver();
         wd.manage().window().maximize();
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wd.navigate().to("https://trello.com/");
+
         user = new UserHelper(wd);
         board = new BoardHelper(wd);
+        user.login("aleksivan060@gmail.com", "20111978");
+
     }
     public void stop() {
         wd.close();
